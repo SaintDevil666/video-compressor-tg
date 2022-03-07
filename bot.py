@@ -7,12 +7,15 @@ import requests
 import random
 from aiogram import Bot
 from aiogram.dispatcher import Dispatcher
-from aiogram.utils import executor, exceptions
+from aiogram.utils import executor
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 
 bot = Bot(config.TOKEN)
 dp = Dispatcher(bot)
 dp.middleware.setup(LoggingMiddleware())
+
+os.system("mkdir videos animations")
+
 
 class ErrorLogs(object):
     errs = []
@@ -51,7 +54,6 @@ async def compress(message):
         else:
             level = 5
         path = await download_file(file_id)
-        os.system("touch videos/")
         new_path = "videos/r" + str(random.randrange(1000)) + ".mp4"
         os.system("ffmpeg -loglevel panic -i " + path + " -vf \"scale=trunc(iw/" + str(level * 2) + ")*2:trunc(ih/" + str(level*2) + ")*2\" " + new_path)
         await bot.send_video(message.chat.id, video=open(new_path, 'rb'))
@@ -69,5 +71,5 @@ async def download_file(file_id):
     open(path, "wb").write(requests.get(url).content)
     return path
 
-
+o
 executor.start_polling(dp)
