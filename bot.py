@@ -51,6 +51,7 @@ async def compress(message):
         else:
             level = 5
         path = await download_file(file_id)
+        os.system("touch videos/")
         new_path = "videos/r" + str(random.randrange(1000)) + ".mp4"
         os.system("ffmpeg -loglevel panic -i " + path + " -vf \"scale=trunc(iw/" + str(level * 2) + ")*2:trunc(ih/" + str(level*2) + ")*2\" " + new_path)
         await bot.send_video(message.chat.id, video=open(new_path, 'rb'))
