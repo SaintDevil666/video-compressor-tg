@@ -57,8 +57,11 @@ async def compress(message):
         new_path = "videos/r" + str(random.randrange(1000)) + ".mp4"
         os.system("ffmpeg -loglevel panic -i " + path + " -vf \"scale=trunc(iw/" + str(level * 2) + ")*2:trunc(ih/" + str(level*2) + ")*2\" " + new_path)
         await bot.send_video(message.chat.id, video=open(new_path, 'rb'))
-        os.remove(path)
-        os.remove(new_path)
+        try:
+            os.remove(path)
+            os.remove(new_path)
+        except:
+            pass
     else:
         await bot.send_message(message.chat.id, "Ответь командой на видео или гифку!",
                                reply_to_message_id=message.message_id)
