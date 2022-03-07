@@ -71,5 +71,5 @@ async def download_file(file_id):
     open(path, "wb").write(requests.get(url).content)
     return path
 
-o
+
 executor.start_polling(dp)
